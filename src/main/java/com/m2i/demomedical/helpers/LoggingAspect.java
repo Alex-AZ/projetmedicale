@@ -1,14 +1,13 @@
 package com.m2i.demomedical.helpers;
 
+import com.m2i.demomedical.entities.PatientEntity;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.*;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import static com.m2i.demomedical.helpers.LoggingHelper.LogLevel.INFO;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 @Aspect
 @Component
@@ -21,10 +20,27 @@ public class LoggingAspect {
         this.lh = lh;
     }
 
-    // add(..) = Add ayant n'importe quel paramètres
-    @Before("execution(* com.m2i.demomedical.controller.PatientController.add(..) )")
-    public void callOnPatientGet() {
-        System.out.println("Je suis un aspect, je m'execute avant Get Patient");
+    @Around("execution(* com.m2i.demomedical.service.PatientService.addPatient(..) )")
+    public Object callOnPatientPOST( ProceedingJoinPoint proceedingJoinPoint ) throws IOException {
+        String chaine = "";
+
+
+        Object value = null;
+
+        try {
+            value = proceedingJoinPoint.proceed(); // Appel addPost  , add , ...
+        } catch (Throwable e) {
+            e.printStackTrace();
+
+            if( proceedingJoinPoint.getArgs().length > 0 ){
+                HttpServletRequest request = (HttpServletRequest) proceedingJoinPoint.getArgs()[0];
+                chaine = "Appel de "+proceedingJoinPoint.getSignature()+" avec nom = " + request.getParameter("nom") + " , prenom = "+ request.getParameter("prenom");
+                lh.log( chaine );
+            }
+
+        }
+
+        return value;
     }
 
     @After("execution(* com.m2i.demomedical.controller.PatientController.add(..) )")
@@ -37,44 +53,33 @@ public class LoggingAspect {
         System.out.println("Je suis un aspect, je m'execute avant chaque méthode de patient Service");
     }
 
-    @Around("execution(* com.m2i.demomedical.controller.PatientController.*(..))")
-    public Object frenchAroundAdvice(ProceedingJoinPoint
-                                             proceedingJoinPoint){
-        System.out.println("Valeur du param`etre i dans saluer : " +
-                proceedingJoinPoint.getArgs()[0]);
-        System.out.println("Signature : " + proceedingJoinPoint.
-                getSignature());
-        Object value = null;
-        try {
-            value = proceedingJoinPoint.proceed();
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
-        System.out.println("Valeur de retour de saluer : " + value);
-        return value;
-    }
+    //@AfterThrowing()
+    //public void envoiMailException(){
+    // Envoi un mail à l'administrateur
+    //}
 
     @Around("execution(* com.m2i.demomedical.controller.*.*(..))")
-    public Object logActions(ProceedingJoinPoint
-                                             proceedingJoinPoint){
-        String chaine = "Valeur du param`etre i dans saluer : ";
-        if( proceedingJoinPoint.getArgs().length > 0 )
-            chaine += proceedingJoinPoint.getArgs()[0];
-        chaine += "Signature : " + proceedingJoinPoint.
-                getSignature();
+    public Object logActionOnFile(ProceedingJoinPoint proceedingJoinPoint) throws IOException {
+        String chaine = "";
 
-        lh.log( chaine , INFO );
+        if( proceedingJoinPoint.getArgs().length > 0 )
+            chaine += "Valeur du paramètre 0 du contolleur " + proceedingJoinPoint.getArgs()[0];
+
+        chaine += "Signature : " + proceedingJoinPoint.getSignature();
+
+        lh.log( chaine  );
         Object value = null;
+
         try {
             value = proceedingJoinPoint.proceed();
         } catch (Throwable e) {
             e.printStackTrace();
         }
-        chaine = "Valeur de retour de saluer : " + value;
-        lh.log( chaine , INFO );
+        chaine = "Valeur de retour de la méthode du controlleur : " + value;
+        lh.log( chaine  );
+
         return value;
     }
-
 
 
 }

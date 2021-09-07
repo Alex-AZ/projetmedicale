@@ -1,6 +1,7 @@
 package com.m2i.demomedical.controller;
 
 import com.m2i.demomedical.entities.PatientEntity;
+import com.m2i.demomedical.helpers.LoggingHelper;
 import com.m2i.demomedical.service.PatientService;
 import com.m2i.demomedical.service.VilleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 
+
 @Controller
 @RequestMapping("/patient")
 public class PatientController {
+
+    @Autowired
+    final private LoggingHelper lh;
 
     @Autowired
     final private PatientService ps;
@@ -23,7 +28,8 @@ public class PatientController {
     @Autowired
     final private VilleService vs;
 
-    public PatientController(PatientService ps, VilleService vs) {
+    public PatientController(LoggingHelper lh, PatientService ps, VilleService vs) {
+        this.lh = lh;
         this.ps = ps;
         this.vs = vs;
     }
@@ -50,14 +56,15 @@ public class PatientController {
         String email = request.getParameter("email");
         String ville = request.getParameter("ville");
 
-        // Log : paramètres récupérés : X, Y ,Z
+        //lh.log(" AddPost : Params : nom = "+nom+", prenom = "+nom+" ", INFO );
 
         try{
             ps.addPatient(nom, prenom, telephone, email, Integer.parseInt( ville ) );
-            // Log : opération add Patient Success
+            //lh.log(" Success AddPost " , INFO );
             return "redirect:/patient?success";
         }catch( Exception e ){
-            // Log : opération add Patient error + erreur
+            //lh.log(" Erreur AddPost " + e.getMessage() , ERROR );
+
             model.addAttribute("error" , e.getMessage() );
 
             // Récupérer les anciens paramètres
@@ -79,6 +86,7 @@ public class PatientController {
 
     @PostMapping("/edit/{id}")
     public String editPost( HttpServletRequest request , @PathVariable int id ){
+
         try{
             String nom = request.getParameter("nom");
             String prenom = request.getParameter("prenom");
@@ -103,4 +111,21 @@ public class PatientController {
         }
     }
 
+    /* @PostMapping("/addv2")
+    public void addPostV2( HttpServletRequest request, Model model  ){
+        String nom = request.getParameter("nom");
+        String prenom = request.getParameter("prenom");
+        String telephone = request.getParameter("telephone");
+        String email = request.getParameter("email");
+
+        PatientEntity p = new PatientEntity();
+
+        p.setNom(nom);
+        p.setPrenom(prenom);
+        p.setEmail(email);
+        p.setTelephone(telephone);
+
+        em.persist(p);
+
+    } */
 }
