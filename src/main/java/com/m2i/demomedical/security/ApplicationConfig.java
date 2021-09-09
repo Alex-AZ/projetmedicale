@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -37,11 +38,13 @@ public class ApplicationConfig extends WebSecurityConfigurerAdapter {
     public static class ApiWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
         protected void configure(HttpSecurity http) throws Exception {
             http
-                    .antMatcher("/ws/**")
-                    .authorizeRequests(authorize -> authorize
-                            .anyRequest().hasRole("ADMIN")
-                    )
-                    .httpBasic();
+            .antMatcher("/ws/**")
+            .csrf()
+            .disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // On utilise pas les sessions, toute req est déconnectée suite à l'exécution
+            .and().authorizeRequests(authorize -> authorize
+                    .anyRequest().hasRole("ADMIN")
+            )
+            .httpBasic();
         }
     }
 

@@ -40,7 +40,7 @@ public class PatientService {
     }
 
     @Transactional
-    public void addPatient(String nom, String prenom, String telephone , String email,  int ville ) throws Exception {
+    public PatientEntity addPatient(String nom, String prenom, String telephone , String email, int ville ) throws Exception {
 
         checkPatient( nom, prenom, telephone , email );
 
@@ -53,6 +53,8 @@ public class PatientService {
         villeP.setId( ville );
         p.setVille( villeP );
         pr.save( p );
+
+        return p;
     }
 
     public void editPatient(int idp, String nom, String prenom, String email, String telephone , int ville ) throws Exception {
