@@ -78,10 +78,14 @@ public class PatientController {
 
     @GetMapping("/edit/{id}")
     public String edit( Model model , @PathVariable int id ){
-        model.addAttribute( "entete_titre" , "Editer un patient" );
-        model.addAttribute( "liste_villes" , vs.getList() );
-        model.addAttribute( "p" , ps.find(id) );
-        return "patient/add_edit";
+        try{
+            model.addAttribute( "entete_titre" , "Editer un patient" );
+            model.addAttribute( "liste_villes" , vs.getList() );
+            model.addAttribute( "p" , ps.find(id) );
+            return "patient/add_edit";
+        }catch ( Exception e ){
+            return "redirect:/patient?error="+e.getMessage();
+        }
     }
 
     @PostMapping("/edit/{id}")

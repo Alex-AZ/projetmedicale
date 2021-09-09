@@ -20,7 +20,7 @@ public class LoggingAspect {
         this.lh = lh;
     }
 
-    @Around("execution(* com.m2i.demomedical.service.PatientService.addPatient(..) )")
+    /* @Around("execution(* com.m2i.demomedical.service.PatientService.addPatient(..) )")
     public Object callOnPatientPOST( ProceedingJoinPoint proceedingJoinPoint ) throws IOException {
         String chaine = "";
 
@@ -32,12 +32,6 @@ public class LoggingAspect {
         } catch (Throwable e) {
             e.printStackTrace();
 
-            if( proceedingJoinPoint.getArgs().length > 0 ){
-                HttpServletRequest request = (HttpServletRequest) proceedingJoinPoint.getArgs()[0];
-                chaine = "Appel de "+proceedingJoinPoint.getSignature()+" avec nom = " + request.getParameter("nom") + " , prenom = "+ request.getParameter("prenom");
-                lh.log( chaine );
-            }
-
         }
 
         return value;
@@ -46,7 +40,7 @@ public class LoggingAspect {
     @After("execution(* com.m2i.demomedical.controller.PatientController.add(..) )")
     public void callAfterPatientGet() {
         System.out.println("Je suis un aspect, je m'execute après Get Patient");
-    }
+    } */
 
     @Before("execution(* com.m2i.demomedical.service.PatientService.*(..) )")
     public void callOnPatientServiceCall() {

@@ -5,7 +5,6 @@ import com.m2i.demomedical.entities.VilleEntity;
 import com.m2i.demomedical.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PatientService {
@@ -39,25 +38,31 @@ public class PatientService {
         }
     }
 
-    @Transactional
     public PatientEntity addPatient(String nom, String prenom, String telephone , String email, int ville ) throws Exception {
 
-        checkPatient( nom, prenom, telephone , email );
+        try{
+            checkPatient( nom, prenom, telephone , email );
+            PatientEntity p = new PatientEntity();
+            p.setNom(nom);
+            p.setPrenom(prenom);
+            p.setEmail(email);
+            p.setTelephone(telephone);
+            VilleEntity villeP = new VilleEntity();
+            villeP.setId( ville );
+            p.setVille( villeP );
+            pr.save( p );
 
-        PatientEntity p = new PatientEntity();
-        p.setNom(nom);
-        p.setPrenom(prenom);
-        p.setEmail(email);
-        p.setTelephone(telephone);
-        VilleEntity villeP = new VilleEntity();
-        villeP.setId( ville );
-        p.setVille( villeP );
-        pr.save( p );
+            return p;
 
-        return p;
+        }catch( Exception e ){
+            throw e;
+        }
+
+
+
     }
 
-    public void editPatient(int idp, String nom, String prenom, String email, String telephone , int ville ) throws Exception {
+    public PatientEntity editPatient(int idp, String nom, String prenom, String email, String telephone , int ville ) throws Exception {
         checkPatient( nom, prenom, telephone , email );
 
         PatientEntity p = pr.findById(idp).get();
@@ -69,6 +74,7 @@ public class PatientService {
         villeP.setId( ville );
         p.setVille( villeP );
         pr.save( p );
+        return p;
     }
 
     public PatientEntity find(int id) {
