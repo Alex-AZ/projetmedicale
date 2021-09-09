@@ -56,6 +56,7 @@ public class PatientAPIController {
                     .body(createPatient);
 
         }catch ( Exception e ){
+            System.out.println("Je suis ici");
             throw new ResponseStatusException( HttpStatus.BAD_REQUEST , e.getMessage() );
         }
 
@@ -72,7 +73,8 @@ public class PatientAPIController {
                     .body(updatedPatient);
 
         }catch ( Exception e ){
-            throw new ResponseStatusException( HttpStatus.BAD_REQUEST , e.getMessage() );
+            System.out.println("Je suis ici");
+            throw new ResponseStatusException( HttpStatus.BAD_REQUEST , e.getMessage()  );
         }
 
     }

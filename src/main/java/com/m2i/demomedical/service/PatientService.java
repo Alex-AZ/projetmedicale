@@ -40,26 +40,18 @@ public class PatientService {
 
     public PatientEntity addPatient(String nom, String prenom, String telephone , String email, int ville ) throws Exception {
 
-        try{
-            checkPatient( nom, prenom, telephone , email );
-            PatientEntity p = new PatientEntity();
-            p.setNom(nom);
-            p.setPrenom(prenom);
-            p.setEmail(email);
-            p.setTelephone(telephone);
-            VilleEntity villeP = new VilleEntity();
-            villeP.setId( ville );
-            p.setVille( villeP );
-            pr.save( p );
+        checkPatient( nom, prenom, telephone , email );
+        PatientEntity p = new PatientEntity();
+        p.setNom(nom);
+        p.setPrenom(prenom);
+        p.setEmail(email);
+        p.setTelephone(telephone);
+        VilleEntity villeP = new VilleEntity();
+        villeP.setId( ville );
+        p.setVille( villeP );
+        pr.save( p );
 
-            return p;
-
-        }catch( Exception e ){
-            throw e;
-        }
-
-
-
+        return p;
     }
 
     public PatientEntity editPatient(int idp, String nom, String prenom, String email, String telephone , int ville ) throws Exception {
