@@ -39,7 +39,6 @@ public class PatientService {
     }
 
     public PatientEntity addPatient(String nom, String prenom, String telephone , String email, int ville ) throws Exception {
-
         checkPatient( nom, prenom, telephone , email );
         PatientEntity p = new PatientEntity();
         p.setNom(nom);
