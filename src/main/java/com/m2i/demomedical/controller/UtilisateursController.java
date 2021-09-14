@@ -34,6 +34,8 @@ public class UtilisateursController {
     public String listAll(Model model) {
         List<UserEntity> lu = (List<UserEntity>) ur.findAll();
         model.addAttribute("liste_utilisateurs", lu);
+        model.addAttribute("is_edit", false);
+        model.addAttribute("as_admin", false);
         return "user/list";
     }
 

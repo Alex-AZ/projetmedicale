@@ -39,7 +39,11 @@
     </nav>
 
     <div  style="color: #FFF;    float: right;">Bienvenue <span th:text =" ${#authentication.getPrincipal().getUser().getName()}"></span> </div>
+    
+    <div class="container">
+	    <div th:if="${param.success}" class="alert alert-success" role="alert">Opération effectuée avec succès</div>
+	    <div th:if="${param.error}" th:text="${param.error}" class="alert alert-danger" role="alert">Un problème est survenue !</div>
+    </div>
+    
 </header>
 
-<div th:if="${param.success}" class="success" style="color: #00FF00">Opération effectuée avec succès</div>
-<div th:if="${param.error}" class="error" style="color: #00FF00"></div>

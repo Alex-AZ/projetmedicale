@@ -1,6 +1,7 @@
 package com.m2i.demomedical.controller;
 
 import com.m2i.demomedical.entities.PatientEntity;
+import com.m2i.demomedical.entities.VilleEntity;
 import com.m2i.demomedical.helpers.LoggingHelper;
 import com.m2i.demomedical.service.PatientService;
 import com.m2i.demomedical.service.VilleService;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -37,6 +40,9 @@ public class PatientController {
     @GetMapping("")
     public String list( Model model ){
         model.addAttribute( "liste_patient" , ps.getList() );
+        model.addAttribute( "liste_villes" , vs.getList() );
+        List<VilleEntity> lvilles = (List<VilleEntity>) vs.getList();
+        System.out.println( lvilles.size() ); 
         return "patient/list";
     }
 
@@ -45,7 +51,7 @@ public class PatientController {
         model.addAttribute( "entete_titre" , "Ajouter un patient" );
         model.addAttribute( "liste_villes" , vs.getList() );
         model.addAttribute( "p" , new PatientEntity());
-        return "patient/add_edit";
+        return "patient/add_edit"; 
     }
 
     @PostMapping("/add")

@@ -6,7 +6,7 @@
 <body>
     <header th:replace="~{ header :: #header }"></header>
     <main class="container">
-        <a href="/user/add" class="btn btn-danger float-end">
+        <a data-bs-toggle="modal" data-bs-target="#exampleModal"  href="#" class="btn btn-danger float-end">
             Nouvel Utilisateur
         </a>
         <div class="h2"> Liste des Utilisateurs</div>
@@ -16,7 +16,7 @@
                 <th>id</th>
                 <th>Nom</th>
                 <th>Email</th>
-                <th>RÃ´le</th>
+                <th>Rôle</th>
                 <th>Photo</th>
                 <th style="width: 80px"><i class="fas fa-cogs"></i></th>
             </tr>
@@ -38,6 +38,28 @@
         </table>
     </main>
     <footer th:include="~{ footer :: #footer }"></footer>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form name="userForm" method="POST" action="/user/add">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ajouter un utilisateur</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div th:include="~{ user/add_edit :: #userFields }"></div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="submit" class="btn btn-secondary">Valider</button>
+                        <button type="reset" class="btn btn-danger float-end">Annuler</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
 </body>
 
 </html>
