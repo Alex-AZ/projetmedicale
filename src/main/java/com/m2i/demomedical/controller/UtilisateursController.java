@@ -135,9 +135,24 @@ public class UtilisateursController {
     }
 
 
-    @GetMapping( value = "/profile/{id}" )
+    @GetMapping( value = "/profil/{id}" )
     @Secured({"ROLE_ADMIN", "ROLE_USER"})
-    public String myProfile( @PathVariable int id ){
-        return "";
+    public String myProfile( @PathVariable int id , Model model ){
+    	try {
+            UserEntity u = ur.findById(id).orElse(null);
+            model.addAttribute("entete_titre", "Modifier profil" + String.valueOf(id));
+            model.addAttribute("value_nom", u.getName());
+            model.addAttribute("value_mail", u.getEmail());
+            model.addAttribute("value_username", u.getUsername());
+            model.addAttribute("value_photouser", u.getPhotouser());
+            model.addAttribute("as_admin", u.getRoles().equals("ROLE_ADMIN"));
+            model.addAttribute("is_edit", true);
+            model.addAttribute("button_submit_text", "Mettre à jour");
+
+
+		  } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "L'utilisateur " + id + " n'est pas trouvé");
+          }
+        return "user/add_edit";
     }
 }
