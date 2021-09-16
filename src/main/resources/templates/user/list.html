@@ -50,6 +50,8 @@
                     </div>
                     <div class="modal-body">
                         <div th:include="~{ user/add_edit :: #userFields }"></div>
+                        <div th:include="~{ user/add_edit :: #roleField }"></div>
+                        
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="submit" class="btn btn-secondary">Valider</button>

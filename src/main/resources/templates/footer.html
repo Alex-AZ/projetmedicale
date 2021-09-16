@@ -12,19 +12,19 @@
 <!-- Modal -->
     <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <form name="villeForm" method="POST" action="/user/edit/${#authentication.getPrincipal().getUser().getId()}">
+            <form name="villeForm" method="POST" th:action="@{'/user/profil/' + ${#authentication.getPrincipal().getUser().getId()}}" autocomplete="off">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Editer mon profil</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
-                        <!--  <div th:include="~{ user/add_edit :: #userFields }"></div>  -->
+                    <div class="modal-body" th:with="u=${#authentication.getPrincipal().getUser()}">
+                        <div th:include="~{ user/add_edit :: #userFields( u=${u} , as_admin=false, is_edit = true ) }"></div>
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="reset" class="btn btn-danger float-end">Annuler</button>
                         <button type="submit" class="btn btn-secondary">Valider</button>
-                    </div>
+                    </div> 
                 </div>
             </form>
         </div>
