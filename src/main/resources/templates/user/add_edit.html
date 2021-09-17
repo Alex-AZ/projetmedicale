@@ -4,39 +4,48 @@
 <head th:include="~{ head :: #head }"></head>
 
 <body>
-
     <header th:include="~{ header :: #header }"></header>
     <main class="container">
         <div class="h2" th:text="${entete_titre}"></div>
         <form name="userForm" method="POST" autocomplete="off"> 
             <div id="userFields">
+            
+            	<div class="progress mb-3">
+				  <div class="progress-bar" id="progressbar-inner" role="progressbar" style="width: 0%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+				</div>
+
 	            <div class="mb-3">
 	                <label for="nom" class="form-label">Nom</label>
-	                <input type="text" class="form-control" id="nom" name="nom" placeholder="Nom" th:value="${u?.name}"  minlength="2" required>
+	                <input type="text" class="form-control" id="nom" onchange="createRandomUsername();calculProgress();" name="nom" placeholder="Nom" th:value="${u?.name}"  minlength="2" required>
 	            </div>
 	
 	            <div class="mb-3">
 	                <label for="username" class="form-label">Nom d'utilisateur</label>
-	                <input type="text" class="form-control" id="username" name="username" placeholder="Username" th:value="${u?.username}"  minlength="2" required autocomplete="false">
+	                <input type="text" class="form-control" id="username" name="username" onchange="calculProgress()" placeholder="Username" th:value="${u?.username}"  minlength="2" required autocomplete="false">
 	            </div>
 	
 	            <div class="mb-3">
 	                <label for="photouser" class="form-label">Photo</label>
-	                <input type="text" class="form-control" name="photouser" id="photouser" placeholder="Photo" th:value="${u?.photouser}" minlength="2" required>
+	                <input type="text" class="form-control" name="photouser" id="photouser" onchange="calculProgress()" placeholder="Photo" th:value="${u?.photouser}" minlength="2" required>
 	            </div>
 	
 	            <div class="mb-3">
 	                <label for="email" class="form-label">Email</label>
-	                <input type="text" class="form-control" name="email" id="email" th:placeholder="${placeholder_mail}" th:value="${u?.email}" minlength="2" required>
+	                <input type="text" class="form-control" name="email" id="email" onchange="calculProgress()" th:placeholder="${placeholder_mail}" th:value="${u?.email}" minlength="2" required>
 	            </div>
 	
 	            <div class="mb-3">
 	                <label for="password" class="form-label">Mot de passe</label>
-	                <input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe"  minlength="2" th:required="${!is_edit}" autocomplete="false">
+	                <div class="row">
+	                	<div class="col-10">
+	                		<input type="password" autocomplete="new-password" onchange="calculProgress()" class="form-control" id="password" name="password" placeholder="Mot de passe"  minlength="2" th:required="${!is_edit}">
+	                	</div>
+	                	<div class="col-2">
+	                		<button class="btn btn-primary" type="button" onclick="document.getElementById('password').value=randomPass()"><i class="fa fa-key" aria-hidden="true"></i></button>
+	                	</div>
+	                </div>
 	            </div>
-	
 			</div>
-	
 	
             <div  id="roleField">
 	            <div class="mb-3" >

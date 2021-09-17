@@ -10,6 +10,7 @@
 
 
 <!-- Modal -->
+<!--- 
     <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <form name="villeForm" method="POST" th:action="@{'/user/profil/' + ${#authentication.getPrincipal().getUser().getId()}}" autocomplete="off">
@@ -19,7 +20,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body" th:with="u=${#authentication.getPrincipal().getUser()}">
-                        <div th:include="~{ user/add_edit :: #userFields( u=${u} , as_admin=false, is_edit = true ) }"></div>
+                        <div th:include="~{ user/add_edit :: #userFields( u=${u} , as_admin=false, is_edit = true , prefix_input=profile ) }"></div>
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="reset" class="btn btn-danger float-end">Annuler</button>
@@ -29,6 +30,6 @@
             </form>
         </div>
     </div>
-    
+ -->
 </footer>
 
