@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -119,6 +120,21 @@ public class PatientController {
         }catch( Exception e ){
         return "patient?error="+e.getMessage();
         }
+    }
+    
+    @GetMapping("/check")
+    @ResponseBody
+    public String checkExists( HttpServletRequest request ){
+    	String emailParam = request.getParameter("email");
+    	System.out.println( emailParam );
+    	PatientEntity patient = ps.findByEmail( emailParam ); 
+         
+    	if( patient != null ) {
+    		return "Patient existe déjà";
+    	}
+    	
+    	return ""; 
+        //return "common/error";
     }
 
     /* @PostMapping("/addv2")

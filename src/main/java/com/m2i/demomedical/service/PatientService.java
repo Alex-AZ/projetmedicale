@@ -71,6 +71,15 @@ public class PatientService {
     public PatientEntity find(int id) {
         return pr.findById( id ).get();
     }
+    
+    public PatientEntity findByEmail(String email) {
+        try {
+        	return pr.findByEmail( email ).get();        	
+        }catch( Exception e ) {
+        	return null; 
+        }
+    	
+    }
 
     public void delete(int id) {
         pr.deleteById(id);

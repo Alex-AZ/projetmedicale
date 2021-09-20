@@ -62,7 +62,7 @@
     </div>
     
     <script>
-    function doAjax() {
+    function checkPatient() {
     	
     	console.log("doAjax");
 
@@ -71,7 +71,11 @@
         xhr.onreadystatechange = function() {
             // instructions of anonymous function
             if (xhr.readyState == 4 && xhr.status == 200) {
-                console.log(xhr.responseText);
+                if( xhr.responseText.length > 0 ){ // cas d'erreur
+                	document.getElementById('message').innerHTML = '<div class="alert alert-danger">'+xhr.responseText+'</div>';
+                }else{ // sans erreur 
+                	document.getElementById('message').innerHTML = ''; 
+                }
             }
         };
 
@@ -80,8 +84,8 @@
         xhr.send();
     }
     
-    var emailInput = document.getElementById("email");
-    emailInput.onchange=doAjax;
+    let emailInput = document.getElementById("email");
+    emailInput.onchange=checkPatient;
     
     </script>
 </body>
