@@ -8,6 +8,7 @@ import com.m2i.demomedical.service.VilleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -112,14 +113,16 @@ public class PatientController {
         }
     }
 
-    @GetMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
+    @ResponseBody
     public String delete( @PathVariable int id ){
         try{
             ps.delete(id);
-            return "redirect:/patient?success";
+            //return "redirect:/patient?success";
         }catch( Exception e ){
-        return "patient?error="+e.getMessage();
+        	//return "patient?error="+e.getMessage();
         }
+        return "ok";
     }
     
     @GetMapping("/check")
