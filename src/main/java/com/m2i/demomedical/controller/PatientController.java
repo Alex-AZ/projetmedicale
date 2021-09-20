@@ -124,16 +124,12 @@ public class PatientController {
     
     @GetMapping("/check")
     @ResponseBody
-    public String checkExists( HttpServletRequest request ){
+    public Boolean checkExists( HttpServletRequest request ){
     	String emailParam = request.getParameter("email");
     	System.out.println( emailParam );
     	PatientEntity patient = ps.findByEmail( emailParam ); 
          
-    	if( patient != null ) {
-    		return "Patient existe déjà";
-    	}
-    	
-    	return ""; 
+    	return patient != null; 
         //return "common/error";
     }
 

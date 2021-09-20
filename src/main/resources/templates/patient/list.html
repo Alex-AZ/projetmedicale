@@ -13,9 +13,9 @@
                 <tr>
                     <th>id</th>
                     <th>Nom</th>
-                    <th>Prénom</th>
+                    <th>Prï¿½nom</th>
                     <th>Mail</th>
-                    <th>Téléphone</th>
+                    <th>Tï¿½lï¿½phone</th>
                     <th>Ville</th>
                     <th><i class="fas fa-cogs"></i></th>
                 </tr>
@@ -54,7 +54,7 @@
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="reset" class="btn btn-danger float-end">Annuler</button>
-                        <button type="submit" class="btn btn-secondary">Valider</button>
+                        <button type="submit" class="btn btn-secondary" id="submitbtn">Valider</button>
                     </div>
                 </div>
             </form>
@@ -71,10 +71,12 @@
         xhr.onreadystatechange = function() {
             // instructions of anonymous function
             if (xhr.readyState == 4 && xhr.status == 200) {
-                if( xhr.responseText.length > 0 ){ // cas d'erreur
-                	document.getElementById('message').innerHTML = '<div class="alert alert-danger">'+xhr.responseText+'</div>';
+                if( xhr.responseText == "true" ){ // cas d'erreur
+                	document.getElementById('message').innerHTML = '<div class="alert alert-danger">Patient existe dÃ©jÃ , veuillez vÃ©rifier votre saisie..</div>';
+                	document.getElementById('submitbtn').disabled = true;
                 }else{ // sans erreur 
-                	document.getElementById('message').innerHTML = ''; 
+                	document.getElementById('message').innerHTML = '';
+                	document.getElementById('submitbtn').disabled = false;
                 }
             }
         };
