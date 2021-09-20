@@ -29,8 +29,10 @@
                     <td th:utext="${patient.telephone}"></td>
                     <td th:utext="${patient.ville?.nom}"></td>
                     <td>
-                        <a th:href="@{'/patient/edit/' + ${patient.id}}"><i class="fas fa-edit"></i></a>
+                        <a data-bs-toggle="modal" data-bs-target="#editModal" href="#" onclick="editPatient()" data-patient="@{${patient.id}}"><i class="fas fa-edit"></i></a>
                         <a th:href="@{'/patient/delete/' + ${patient.id}}"><i class="fas fa-trash"></i></a>
+                        
+                        <!--  th:href="@{'/patient/edit/' + ${patient.id}}" -->
                     </td>
                 </tr>
             </tbody>
@@ -61,34 +63,39 @@
         </div>
     </div>
     
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form name="villeForm" method="POST" action="/patient/edit/1">
+                <div class="modal-content" id="editModalContent">
+                    
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="/js/functions.js"></script>
+    
     <script>
-    function checkPatient() {
-    	
-    	console.log("doAjax");
-
-    	let xhr = new XMLHttpRequest();
+    function editPatient(){
+    	/*let xhr = new XMLHttpRequest();
 
         xhr.onreadystatechange = function() {
             // instructions of anonymous function
             if (xhr.readyState == 4 && xhr.status == 200) {
-                if( xhr.responseText == "true" ){ // cas d'erreur
-                	document.getElementById('message').innerHTML = '<div class="alert alert-danger">Patient existe déjà, veuillez vérifier votre saisie..</div>';
-                	document.getElementById('submitbtn').disabled = true;
-                }else{ // sans erreur 
-                	document.getElementById('message').innerHTML = '';
-                	document.getElementById('submitbtn').disabled = false;
-                }
+                document.getElementById('editModalContent').innerHTML = xhr.responseText; 
             }
         };
 
-        let emailValue = document.getElementById('email').value;
-        xhr.open("GET", "/patient/check?email="+emailValue, true);
-        xhr.send();
+        xhr.open("GET", "/patient/edit/1", true);
+        xhr.send(); */
+        
+    	$.get( "/patient/edit/1", { id: 1 } )
+    	  .done(function( data ) { // xhr.responseText = data
+    	    $("#editModalContent").html( data );
+    	  });
     }
-    
-    let emailInput = document.getElementById("email");
-    emailInput.onchange=checkPatient;
-    
+
     </script>
 </body>
 </html>
