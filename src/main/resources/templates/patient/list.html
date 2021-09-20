@@ -61,5 +61,28 @@
         </div>
     </div>
     
+    <script>
+    function doAjax() {
+    	
+    	console.log("doAjax");
+
+    	let xhr = new XMLHttpRequest();
+
+        xhr.onreadystatechange = function() {
+            // instructions of anonymous function
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                console.log(xhr.responseText);
+            }
+        };
+
+        let emailValue = document.getElementById('email').value;
+        xhr.open("GET", "/patient/check?email="+emailValue, true);
+        xhr.send();
+    }
+    
+    var emailInput = document.getElementById("email");
+    emailInput.onchange=doAjax;
+    
+    </script>
 </body>
 </html>
