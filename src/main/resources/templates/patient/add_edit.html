@@ -5,7 +5,7 @@
 
 <body>
 	<div th:if="${error}" class="text-danger" th:text="${error}"></div>
-	<form name="patientForm" method="POST" action="/patient/edit/1">
+	<form name="patientForm" method="POST" th:action="@{'/patient/edit/' + ${p.id}}">
 		<div class="modal-header">
 			<h5 class="modal-title" id="exampleModalLabel" th:text="${entete_titre}"></h5>
 			<button type="button" class="btn-close" data-bs-dismiss="modal"

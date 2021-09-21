@@ -119,13 +119,14 @@ public class PatientController {
 
     @DeleteMapping("/delete/{id}")
     @ResponseBody
-    public BodyBuilder delete( @PathVariable int id ){
+    public String delete( @PathVariable int id ){
         try{
             ps.delete(id);
-            return ResponseEntity.ok() ;
+        	System.out.println("Supprimer " + id);
         }catch( Exception e ){
         	throw new ResponseStatusException( HttpStatus.BAD_REQUEST , e.getMessage() );
         }
+        return ""; 
     }
     
     @GetMapping("/check")

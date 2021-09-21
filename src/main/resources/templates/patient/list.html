@@ -13,9 +13,9 @@
                 <tr>
                     <th>id</th>
                     <th>Nom</th>
-                    <th>Pr�nom</th>
+                    <th>Prénom</th>
                     <th>Mail</th>
-                    <th>T�l�phone</th>
+                    <th>Téléphone</th>
                     <th>Ville</th>
                     <th><i class="fas fa-cogs"></i></th>
                 </tr>
@@ -75,49 +75,6 @@
     
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="/js/functions.js"></script>
-    
-    <script>
-    
-	    function deletePatient( id ){
-	    	if( confirm( "Etes vous sur ?" ) ){
-	    		/*fetch('/patient/delete/2'+ id, {
-		    		  method: 'DELETE',
-		    		})
-		    		.then(res => window.location = "/patient?success" );
-	    		*/
-	    		
-	    		fetch('/patient/delete/'+ id, {
-		    		  method: 'DELETE',
-		    		  redirect: 'follow' 
-		    		})
-		    		.then( function(response) {
-		    	        if (!response.ok) {
-		    	        	window.location = "/patient?error=Problème";	
-		    	        }else{
-		    	        	window.location = "/patient?success";		    	        	
-		    	        }
-		    	    } );
-	    	} 
-	    }
-	    
-	    function editPatient( id ){
-	    	/*let xhr = new XMLHttpRequest();
-	
-	        xhr.onreadystatechange = function() {
-	            // instructions of anonymous function
-	            if (xhr.readyState == 4 && xhr.status == 200) {
-	                document.getElementById('editModalContent').innerHTML = xhr.responseText; 
-	            }
-	        };
-	
-	        xhr.open("GET", "/patient/edit/1", true);
-	        xhr.send(); ***/
-	        
-	    	$.get( "/patient/edit/" + id )
-	    	  .done(function( data ) { // xhr.responseText = data
-	    	    $("#editModalContent").html( data );
-	    	  });
-	    }
-    </script>
+
 </body>
 </html>

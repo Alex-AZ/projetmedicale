@@ -7,7 +7,7 @@
     <header th:include="~{ header :: #header }"></header>
     <main class="container">
         <div class="h2" th:text="${entete_titre}"></div>
-        <form name="userForm" method="POST" autocomplete="off"> 
+        <form name="userForm" method="POST" autocomplete="off" th:action="@{'/user/edit/' + ${u.id}}"> 
             <div id="userFields">
             
             	<div class="progress mb-3">
