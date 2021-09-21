@@ -6,6 +6,9 @@ import com.m2i.demomedical.helpers.LoggingHelper;
 import com.m2i.demomedical.service.PatientService;
 import com.m2i.demomedical.service.VilleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -115,14 +119,13 @@ public class PatientController {
 
     @DeleteMapping("/delete/{id}")
     @ResponseBody
-    public String delete( @PathVariable int id ){
+    public BodyBuilder delete( @PathVariable int id ){
         try{
             ps.delete(id);
-            //return "redirect:/patient?success";
+            return ResponseEntity.ok() ;
         }catch( Exception e ){
-        	//return "patient?error="+e.getMessage();
+        	throw new ResponseStatusException( HttpStatus.BAD_REQUEST , e.getMessage() );
         }
-        return "ok";
     }
     
     @GetMapping("/check")

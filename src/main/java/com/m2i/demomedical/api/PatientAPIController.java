@@ -37,10 +37,6 @@ public class PatientAPIController {
         }
     }
 
-    /*
-    @TODO : Check Exception problem
-     */
-
     @PostMapping(path="", produces = "application/json")
     public ResponseEntity<PatientEntity> add( @RequestBody PatientEntity patient ) {
         try{
