@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+    <head th:include="~{ head :: #head }"></head>
+<body>
+    <header th:replace="~{ header :: #header }"></header>
+
+    <main class="container">
+        <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-success float-end">Nouveau rdv</button>
+        <div class="h2">Liste des rdvs</div>
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th>Patient</th>
+                <th>Type</th>
+                <th>Date & heure</th>
+                <th style="width:100px"><i class="fas fa-cogs"></i></th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr th:each="rdv : ${liste_rdv}">
+                    <td><span th:utext="${rdv.patient.prenom}"></span> <strong th:utext="${rdv.patient.nom}"></strong> </td>
+                    <td th:utext="${rdv.type}"></td>
+                    <td th:utext="${#dates.format(rdv.dateheure, 'dd/MM/yyyy HH:mm')}"></td>
+                    <td>
+                        <!--   <a th:href="@{'/rdv/edit/' + ${v.id}}"><i class="fas fa-edit"></i></a>
+                        <a th:href="@{'/rdv/delete/' + ${v.id}}"><i class="fas fa-trash"></i></a> -->
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <footer th:include="~{ footer :: #footer }"></footer>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form name="rdvForm" method="POST" action="/rdv/add">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ajouter un rdv</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div th:include="~{ rdv/ajout_edition :: #rdvFields }"></div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="reset" class="btn btn-danger float-end">Annuler</button>
+                        <button type="submit" class="btn btn-secondary" id="submitbtn">Valider</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

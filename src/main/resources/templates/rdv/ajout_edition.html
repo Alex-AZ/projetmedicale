@@ -1,0 +1,52 @@
+<form name="rdvForm" method="POST" xmlns:th="https://www.thymeleaf.org">
+    <div id="rdvFields">
+        <div class="mb-3">
+					<label for="patient" class="form-label">Patient</label> 
+					<select	name="patient" id="patient" required class="form-select">
+						<option value="">Sélectionner patient</option>
+						<option th:each="patient : ${liste_patients}" th:value="${patient.id}"
+							th:utext="${patient.prenom} +' ' + ${patient.nom}" th:selected="${patient.id==p?.patient?.id}"></option>
+					</select>
+				</div>
+
+        <div class="mb-3">
+            <label for="cp" class="form-label">Date</label>
+            <div class="row">
+            	<div class="col-8"><input type="date" name="datev" class="form-control" required></div>
+            	<div class="col-4"><input type="time" name="timev" class="form-control" required></div>
+            </div>
+        </div>
+         
+        <div class="mb-3">
+            <div class="form-check">
+			  <input class="form-check-input" type="radio" name="typerdv" id="flexRadioDefault1" checked value="consultation">
+			  <label class="form-check-label" for="flexRadioDefault1">
+			    Consultation
+			  </label>
+			</div>
+			<div class="form-check">
+			  <input class="form-check-input" type="radio" name="typerdv" id="flexRadioDefault2" value="controle">
+			  <label class="form-check-label" for="flexRadioDefault2">
+			    Contrôle
+			  </label>
+			</div>
+        </div>
+        
+        <div class="mb-3">
+            <label for="cp" class="form-label">Durée</label>
+            <input type="number" name="duree" class="form-control" placeholder="Durée" required>
+            
+        </div>
+        
+        <div class="mb-3">
+            <div class="form-floating">
+			  <textarea class="form-control" name="note" placeholder="Veuillez saisir vos notes ici" id="note" style="height: 100px"></textarea>
+			  <label for="note">Note</label>
+			</div>
+        </div>
+
+    </div>
+
+    <button type="submit" class="btn btn-secondary">Valider</button>
+    <button type="reset" class="btn btn-danger float-end">Annuler</button>
+</form>
