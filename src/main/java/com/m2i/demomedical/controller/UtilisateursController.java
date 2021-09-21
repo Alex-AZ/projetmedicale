@@ -106,14 +106,12 @@ public class UtilisateursController {
     @GetMapping(value = "/delete/{id}")
     public String deleteUserGet(Model model, @PathVariable int id) {
         try {
-            model.addAttribute("entete_titre", "Supprimer utilisateur ID " + String.valueOf(id));
             UserEntity u = ur.findById(id).orElse(null);
-            model.addAttribute("confirmation_text", "L'utilisateur " + u.getName() + " sera supprimé");
-            model.addAttribute("button_submit_text", "Supprimer");
+            ur.delete(u); 
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "L'utilisateur " + id + " n'est pas trouvé");
         }
-        return "common/delete";
+        return "redirect:/user";
     }
 
 
