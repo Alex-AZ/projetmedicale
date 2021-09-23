@@ -22,8 +22,8 @@
                     <td th:utext="${rdv.type}"></td>
                     <td th:utext="${#dates.format(rdv.dateheure, 'dd/MM/yyyy HH:mm')}"></td>
                     <td>
-                        <!--   <a th:href="@{'/rdv/edit/' + ${v.id}}"><i class="fas fa-edit"></i></a>
-                        <a th:href="@{'/rdv/delete/' + ${v.id}}"><i class="fas fa-trash"></i></a> -->
+                        <a data-bs-toggle="modal" data-bs-target="#editModal" href="#" th:onclick="|editItem('/rdv' , ${rdv.id})|" ><i class="fas fa-edit"></i></a>
+                        <a th:onclick="|deleteItem('/rdv' , ${rdv.id})|"><i class="fas fa-trash"></i></a>
                     </td>
                 </tr>
             </tbody>
@@ -52,6 +52,15 @@
             </form>
         </div>
     </div>
+    
+     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" id="editModalContent">
+                
+            </div>
+        </div>
+    </div>
+    
 
 </body>
 </html>

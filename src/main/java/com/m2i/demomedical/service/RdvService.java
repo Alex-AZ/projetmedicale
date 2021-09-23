@@ -57,5 +57,31 @@ public class RdvService {
         return r;
 	}
 	
+	public RdvEntity editRdv( int id,  String patient, String duree, String type, String dateheure, String note) throws ParseException {
+		RdvEntity r = rr.findById(id).get(); 
+        r.setDuree( Integer.parseInt(duree) );
+        r.setType( type );
+        
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH);
+
+        Date date = formatter.parse(dateheure);
+        
+        r.setDateheure( date );
+        r.setNote(note);
+        PatientEntity pEntity = new PatientEntity();
+        pEntity.setId( Integer.parseInt( patient ) ); 
+        r.setPatient(pEntity);
+        rr.save( r );
+        return r;
+	}
+	
+	
+	public void delete( int id ) {
+		rr.deleteById(id);
+	}
+	
+    public RdvEntity find(int id) {
+        return rr.findById( id ).get();
+    }
 }
 

@@ -1,5 +1,6 @@
 package com.m2i.demomedical.controller;
 
+import com.m2i.demomedical.entities.PatientEntity;
 import com.m2i.demomedical.entities.UserEntity;
 import com.m2i.demomedical.repository.UserRepository;
 import com.m2i.demomedical.security.ApplicationConfig;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -169,5 +171,24 @@ public class UtilisateursController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Erreur dans l'édition du patient " + id);
         }
     	return "redirect:/patient";
+    }
+    
+    @GetMapping("/check")
+    @ResponseBody
+    public Boolean checkExists( HttpServletRequest request ){
+    	String emailParam = request.getParameter("email");
+    	String usernameParam = request.getParameter("username");
+    	int useridParam = Integer.parseInt(request.getParameter("userid"));
+    	try {
+        	System.out.println( emailParam );
+        	UserEntity user = ur.findByEmailOrUsername( emailParam , usernameParam ); 
+        	
+        	System.out.println( user ); 
+        	return user != null && user.getId() != useridParam; 	
+    	}catch( Exception e ) {
+    		return true; 
+    	}
+         
+    	   
     }
 }
