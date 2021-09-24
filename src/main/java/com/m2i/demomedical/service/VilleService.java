@@ -1,5 +1,7 @@
 package com.m2i.demomedical.service;
 
+import java.util.Optional;
+
 import com.m2i.demomedical.entities.VilleEntity;
 import com.m2i.demomedical.entities.VilleEntity;
 import com.m2i.demomedical.repository.VilleRepository;
@@ -22,18 +24,19 @@ public class VilleService {
         return pr.findById( id ).get();
     }
 
-    public void add(String nom, String cp) {
+    public VilleEntity add(String nom, int cp) {
         VilleEntity p = new VilleEntity();
         p.setNom(nom);
-        p.setCodePostal( Integer.parseInt( cp) ) ;
+        p.setCodePostal( cp ) ;
         pr.save( p );
     }
 
-    public void edit(int id, String nom, String cp) {
+    public VilleEntity edit(int id, String nom, int cp) {
         VilleEntity p = pr.findById(id).get();
         p.setNom(nom);
-        p.setCodePostal( Integer.parseInt( cp) ) ;
+        p.setCodePostal( cp ) ;
         pr.save( p );
+        return p; 
     }
 
     public void delete(int id) {
