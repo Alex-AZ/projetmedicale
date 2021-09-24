@@ -1,52 +1,78 @@
-<form name="rdvForm" method="POST" xmlns:th="https://www.thymeleaf.org">
-    <div id="rdvFields">
-        <div class="mb-3">
-					<label for="patient" class="form-label">Patient</label> 
-					<select	name="patient" id="patient" required class="form-select">
-						<option value="">Sélectionner patient</option>
-						<option th:each="patient : ${liste_patients}" th:value="${patient.id}"
-							th:utext="${patient.prenom} +' ' + ${patient.nom}" th:selected="${patient.id==p?.patient?.id}"></option>
-					</select>
+<form name="rdvForm" method="POST" xmlns:th="https://www.thymeleaf.org" th:action="@{'/rdv/edit/' + ${v.id}}">
+	<div class="modal-header">
+		<h5 class="modal-title" id="exampleModalLabel"
+			th:text="${entete_titre}"></h5>
+		<button type="button" class="btn-close" data-bs-dismiss="modal"
+			aria-label="Close"></button>
+	</div>
+
+	<div class="modal-body">
+
+
+		<div id="rdvFields">
+			<div class="mb-3">
+				<label for="patient" class="form-label">Patient</label> <select
+					name="patient" id="patient" required class="form-select">
+					<option value="">Sélectionner patient</option>
+					<option th:each="patient : ${liste_patients}"
+						th:value="${patient.id}"
+						th:utext="${patient.prenom} +' ' + ${patient.nom}"
+						th:selected="${patient.id==v?.patient?.id}"></option>
+				</select>
+			</div>
+
+			<div class="mb-3">
+				<label for="cp" class="form-label">Date</label>
+				<div class="row">
+					<div class="col-8">
+						<input type="date" name="datev" class="form-control" required
+							th:value="${#dates.format(v?.dateheure, 'yyyy-MM-dd')}">
+					</div>
+					<div class="col-4">
+						<input type="time" name="timev" class="form-control" required
+							th:value="${#dates.format(v?.dateheure, 'HH:mm')}">
+					</div>
 				</div>
-
-        <div class="mb-3">
-            <label for="cp" class="form-label">Date</label>
-            <div class="row">
-            	<div class="col-8"><input type="date" name="datev" class="form-control" required></div>
-            	<div class="col-4"><input type="time" name="timev" class="form-control" required></div>
-            </div>
-        </div>
-         
-        <div class="mb-3">
-            <div class="form-check">
-			  <input class="form-check-input" type="radio" name="typerdv" id="flexRadioDefault1" checked value="consultation">
-			  <label class="form-check-label" for="flexRadioDefault1">
-			    Consultation
-			  </label>
 			</div>
-			<div class="form-check">
-			  <input class="form-check-input" type="radio" name="typerdv" id="flexRadioDefault2" value="controle">
-			  <label class="form-check-label" for="flexRadioDefault2">
-			    Contrôle
-			  </label>
-			</div>
-        </div>
-        
-        <div class="mb-3">
-            <label for="cp" class="form-label">Durée</label>
-            <input type="number" name="duree" class="form-control" placeholder="Durée" required>
-            
-        </div>
-        
-        <div class="mb-3">
-            <div class="form-floating">
-			  <textarea class="form-control" name="note" placeholder="Veuillez saisir vos notes ici" id="note" style="height: 100px"></textarea>
-			  <label for="note">Note</label>
-			</div>
-        </div>
 
-    </div>
+			<div class="mb-3">
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="typerdv"
+						id="flexRadioDefault1" checked value="consultation"
+						th:checked="${isConsultation}"> <label
+						class="form-check-label" for="flexRadioDefault1">
+						Consultation </label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="typerdv"
+						id="flexRadioDefault2" value="controle"
+						th:checked="${!isConsultation}"> <label
+						class="form-check-label" for="flexRadioDefault2"> Contrôle
+					</label>
+				</div>
+			</div>
 
-    <button type="submit" class="btn btn-secondary">Valider</button>
-    <button type="reset" class="btn btn-danger float-end">Annuler</button>
+			<div class="mb-3">
+				<label for="cp" class="form-label">Durée</label> <input
+					type="number" name="duree" class="form-control" placeholder="Durée"
+					required th:value="${v?.duree}">
+
+			</div>
+
+			<div class="mb-3">
+				<div class="form-floating">
+					<textarea class="form-control" name="note"
+						placeholder="Veuillez saisir vos notes ici" id="note"
+						style="height: 100px" th:text="${v?.note}"></textarea>
+					<label for="note">Note</label>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="modal-footer justify-content-between">
+		<button type="submit" class="btn btn-secondary">Valider</button>
+		<button type="reset" class="btn btn-danger">Annuler</button>
+	</div>
 </form>

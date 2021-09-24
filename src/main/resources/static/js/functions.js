@@ -156,3 +156,46 @@ function editPatient(id) {
 			$("#editModalContent").html(data);
 		});
 }
+
+// Delete function permettant de supprimer des patients, rdv, villes avec la route de suppression en paramètre 
+function deleteItem( url , id) { 
+	if (confirm("Etes vous sur ?")) {
+		console.log( url +"/delete/" + id ); 
+		fetch( url +"/delete/" + id, {
+			method: 'DELETE',
+			redirect: 'follow'
+		})
+			.then(function(response) {
+				if (!response.ok) {
+					window.location = url+"?error=Problème";
+				} else {
+					window.location = url+"?success";
+				}
+			});
+	}
+}
+
+function editItem( url , id) {
+	$.get( url + "/edit/" + id)
+		.done(function(data) { 
+			$("#editModalContent").html(data);
+		});
+}
+
+
+function checkUser() {
+	let emailValue = document.getElementById('email').value;
+	let usernameValue = document.getElementById('username').value;
+	let useridValue = document.getElementById('userid').value;
+	$.get( "/user/check" , { email : emailValue , username : usernameValue, userid : useridValue } )
+		.done(function(data) { 
+			console.log( data );
+			if( data == true ){
+				document.getElementById('message').innerHTML = '<div class="alert alert-danger">Utilisateur existe déjà, veuillez vérifier votre saisie..</div>';
+				document.getElementById('submitbtn').disabled = true;
+			}else{
+				document.getElementById('message').innerHTML = '';
+				document.getElementById('submitbtn').disabled = false;
+			}
+		});
+}
