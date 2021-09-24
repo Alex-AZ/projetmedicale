@@ -29,6 +29,7 @@ public class VilleService {
         p.setNom(nom);
         p.setCodePostal( cp ) ;
         pr.save( p );
+        return p; 
     }
 
     public VilleEntity edit(int id, String nom, int cp) {
